@@ -79,6 +79,12 @@ build CMakeFiles/OOPIPsecondSEM.dir/lab5.cpp.o: CXX_COMPILER__OOPIPsecondSEM_uns
   OBJECT_DIR = CMakeFiles/OOPIPsecondSEM.dir
   OBJECT_FILE_DIR = CMakeFiles/OOPIPsecondSEM.dir
 
+build CMakeFiles/OOPIPsecondSEM.dir/lab6.cpp.o: CXX_COMPILER__OOPIPsecondSEM_unscanned_Debug /Users/evgenykost/Documents/OOPIPsecondSEM/lab6.cpp || cmake_object_order_depends_target_OOPIPsecondSEM
+  DEP_FILE = CMakeFiles/OOPIPsecondSEM.dir/lab6.cpp.o.d
+  FLAGS = -g -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.0.sdk -fcolor-diagnostics
+  OBJECT_DIR = CMakeFiles/OOPIPsecondSEM.dir
+  OBJECT_FILE_DIR = CMakeFiles/OOPIPsecondSEM.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target OOPIPsecondSEM
@@ -87,7 +93,7 @@ build CMakeFiles/OOPIPsecondSEM.dir/lab5.cpp.o: CXX_COMPILER__OOPIPsecondSEM_uns
 #############################################
 # Link the executable OOPIPsecondSEM
 
-build OOPIPsecondSEM: CXX_EXECUTABLE_LINKER__OOPIPsecondSEM_Debug CMakeFiles/OOPIPsecondSEM.dir/main.cpp.o CMakeFiles/OOPIPsecondSEM.dir/lab1.cpp.o CMakeFiles/OOPIPsecondSEM.dir/lab3.cpp.o CMakeFiles/OOPIPsecondSEM.dir/lab4.cpp.o CMakeFiles/OOPIPsecondSEM.dir/lab5.cpp.o
+build OOPIPsecondSEM: CXX_EXECUTABLE_LINKER__OOPIPsecondSEM_Debug CMakeFiles/OOPIPsecondSEM.dir/main.cpp.o CMakeFiles/OOPIPsecondSEM.dir/lab1.cpp.o CMakeFiles/OOPIPsecondSEM.dir/lab3.cpp.o CMakeFiles/OOPIPsecondSEM.dir/lab4.cpp.o CMakeFiles/OOPIPsecondSEM.dir/lab5.cpp.o CMakeFiles/OOPIPsecondSEM.dir/lab6.cpp.o
   FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.0.sdk
   OBJECT_DIR = CMakeFiles/OOPIPsecondSEM.dir
   POST_BUILD = :

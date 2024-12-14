@@ -12,4 +12,7 @@ add_executable(OOPIPsecondSEM main.cpp
         lab3.h
         lab5.cpp
         lab5.h
+        lab4.cpp
+        lab6.cpp
+        lab6.h
 )
