@@ -1,7 +1,3 @@
-//
-// Created by Evgeny on 01.11.2024.
-//
-
 #ifndef OOPIPSECONDSEM_LAB3_H
 #define OOPIPSECONDSEM_LAB3_H
 

@@ -6,7 +6,6 @@
 
 using namespace std;
 
-
 class MobileApp {
 public:
     virtual void display() const = 0;
@@ -35,7 +34,7 @@ public:
         file << "GameApp: " << name << endl;
     }
 
-    unique_ptr<MobileApp> clone() const override { // Полиморфное копирование
+    unique_ptr<MobileApp> clone() const override {
         return make_unique<GameApp>(*this);
     }
 };
@@ -124,16 +123,15 @@ public:
     }
 };
 
-// фвабрики для создания объектов (Фабричный метод с аргументами)
 class MobileAppFactory {
 public:
-    virtual unique_ptr<MobileApp> createApp(const string& name) const = 0; //Полиморфная фабрика
+    virtual unique_ptr<MobileApp> createApp(const string& name) const = 0;
     virtual ~MobileAppFactory() {}
 };
 
 class GameAppFactory : public MobileAppFactory {
 public:
-    unique_ptr<MobileApp> createApp(const string& name) const override { //Фабричный конструктор
+    unique_ptr<MobileApp> createApp(const string& name) const override {
         return make_unique<GameApp>(name);
     }
 };
@@ -166,56 +164,45 @@ public:
     }
 };
 
-// Управление списком приложений
-class AppManager {
+class Laba6 {
 private:
-    vector<unique_ptr<MobileApp>> apps;
+    class AppManager {
+    private:
+        vector<unique_ptr<MobileApp>> apps;
 
-public:
-    void addApp(unique_ptr<MobileApp> app) {
-        apps.push_back(move(app));
-    }
-
-    void deleteApp(size_t index) {
-        if (index < apps.size()) {
-            apps.erase(apps.begin() + index);
+    public:
+        void addApp(unique_ptr<MobileApp> app) {
+            apps.push_back(move(app));
         }
-    }
 
-    void editApp(size_t index, const string& newName) {
-        if (index < apps.size()) {
-            apps[index]->edit(newName);
-        }
-    }
-
-    void displayApps() const {
-        for (const auto& app : apps) {
-            app->display();
-        }
-    }
-
-    void saveAppsToFile(const string& filename) const {
-        ofstream file(filename);
-        if (file.is_open()) {
-            for (const auto& app : apps) {
-                app->saveToFile(file);
+        void deleteApp(size_t index) {
+            if (index < apps.size()) {
+                apps.erase(apps.begin() + index);
             }
         }
-    }
-};
 
-void displayMenu() {
-    cout << "\nMenu:" << endl;
-    cout << "1. Add App" << endl;
-    cout << "2. Delete App" << endl;
-    cout << "3. Edit App" << endl;
-    cout << "4. Display Apps" << endl;
-    cout << "5. Save Apps to File" << endl;
-    cout << "6. Exit" << endl;
-    cout << "Enter your choice: ";
-}
+        void editApp(size_t index, const string& newName) {
+            if (index < apps.size()) {
+                apps[index]->edit(newName);
+            }
+        }
 
-int menu() {
+        void displayApps() const {
+            for (const auto& app : apps) {
+                app->display();
+            }
+        }
+
+        void saveAppsToFile(const string& filename) const {
+            ofstream file(filename);
+            if (file.is_open()) {
+                for (const auto& app : apps) {
+                    app->saveToFile(file);
+                }
+            }
+        }
+    };
+
     AppManager manager;
     GameAppFactory gameFactory;
     SocialMediaAppFactory socialFactory;
@@ -223,88 +210,96 @@ int menu() {
     UtilityAppFactory utilityFactory;
     EducationAppFactory educationFactory;
 
-    int choice;
-    do {
-        displayMenu();
-        cin >> choice;
+    void displayMenu() const {
+        cout << "\nMenu:" << endl;
+        cout << "1. Add App" << endl;
+        cout << "2. Delete App" << endl;
+        cout << "3. Edit App" << endl;
+        cout << "4. Display Apps" << endl;
+        cout << "5. Save Apps to File" << endl;
+        cout << "6. Exit" << endl;
+        cout << "Enter your choice: ";
+    }
 
-        switch (choice) {
-            case 1: {
-                cout << "Choose App Type: \n1. Game \n2. Social Media \n3. Productivity \n"
-                        "4. Utility \n5. Education" << endl;
-                int type;
-                cin >> type;
-                cout << "Enter App Name: ";
-                string name;
-                cin.ignore();
-                getline(cin, name);
+public:
+    void run() {
+        int choice;
+        do {
+            displayMenu();
+            cin >> choice;
 
-                switch (type) {
-                    case 1:
-                        manager.addApp(gameFactory.createApp(name));
-                        break;
-                    case 2:
-                        manager.addApp(socialFactory.createApp(name));
-                        break;
-                    case 3:
-                        manager.addApp(productivityFactory.createApp(name));
-                        break;
-                    case 4:
-                        manager.addApp(utilityFactory.createApp(name));
-                        break;
-                    case 5:
-                        manager.addApp(educationFactory.createApp(name));
-                        break;
-                    default:
-                        cout << "Invalid type!" << endl;
+            switch (choice) {
+                case 1: {
+                    cout << "Choose App Type: \n1. Game \n2. Social Media \n3. Productivity \n"
+                            "4. Utility \n5. Education" << endl;
+                    int type;
+                    cin >> type;
+                    cout << "Enter App Name: ";
+                    string name;
+                    cin.ignore();
+                    getline(cin, name);
+
+                    switch (type) {
+                        case 1:
+                            manager.addApp(gameFactory.createApp(name));
+                            break;
+                        case 2:
+                            manager.addApp(socialFactory.createApp(name));
+                            break;
+                        case 3:
+                            manager.addApp(productivityFactory.createApp(name));
+                            break;
+                        case 4:
+                            manager.addApp(utilityFactory.createApp(name));
+                            break;
+                        case 5:
+                            manager.addApp(educationFactory.createApp(name));
+                            break;
+                        default:
+                            cout << "Invalid type!" << endl;
+                    }
+                    break;
                 }
-                break;
+                case 2: {
+                    cout << "Enter App Index to Delete: ";
+                    size_t index;
+                    cin >> index;
+                    manager.deleteApp(index);
+                    break;
+                }
+                case 3: {
+                    cout << "Enter App Index to Edit: ";
+                    size_t index;
+                    cin >> index;
+                    cout << "Enter New Name: ";
+                    string newName;
+                    cin.ignore();
+                    getline(cin, newName);
+                    manager.editApp(index, newName);
+                    break;
+                }
+                case 4:
+                    manager.displayApps();
+                    break;
+                case 5: {
+                    cout << "Enter Filename: ";
+                    string filename;
+                    cin >> filename;
+                    manager.saveAppsToFile(filename);
+                    break;
+                }
+                case 6:
+                    cout << "Exiting..." << endl;
+                    break;
+                default:
+                    cout << "Invalid choice!" << endl;
             }
-            case 2: {
-                cout << "Enter App Index to Delete: ";
-                size_t index;
-                cin >> index;
-                manager.deleteApp(index);
-                break;
-            }
-            case 3: {
-                cout << "Enter App Index to Edit: ";
-                size_t index;
-                cin >> index;
-                cout << "Enter New Name: ";
-                string newName;
-                cin.ignore();
-                getline(cin, newName);
-                manager.editApp(index, newName);
-                break;
-            }
-            case 4:
-                manager.displayApps();
-                break;
-            case 5: {
-                cout << "Enter Filename: ";
-                string filename;
-                cin >> filename;
-                manager.saveAppsToFile(filename);
-                break;
-            }
-            case 6:
-                cout << "Exiting..." << endl;
-                break;
-            default:
-                cout << "Invalid choice!" << endl;
-        }
-    } while (choice != 6);
+        } while (choice != 6);
+    }
+};
 
+int main() {
+    Laba6 laba;
+    laba.run();
     return 0;
 }
-
-void lab6(){
-    menu();
-}
-
-// фабричный метод
-// фабричный метод с аргументами
-// фабричный конструктор
-// полиморфная фабрика
-// полиморфное копирование
